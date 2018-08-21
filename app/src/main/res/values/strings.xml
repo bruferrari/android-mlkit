@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MLKitDemo</string>
+    <string name="text_recognition">Text Recognition</string>
+    <string name="pick_from_gallery">Pick from Gallery</string>
+</resources>
