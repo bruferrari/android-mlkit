@@ -40,13 +40,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     // Max height (portrait mode)
     private var imageMaxHeight: Int? = null
 
+    private var completeText = ""
+
     private lateinit var imageFilePath: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        textRecognitionBtn.setOnClickListener { selectedImage?.let { runTextRecognition(it) } }
+        textRecognitionBtn.setOnClickListener {
+            completeText = ""
+            selectedImage?.let { runTextRecognition(it) }
+        }
         fab.setOnClickListener { dispatchCameraIntent() }
         setupSpinner()
     }
@@ -65,7 +70,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setupSpinner() {
-        val items = arrayOf("Image 1", "Image 2", "Image 3")
+        val items = arrayOf("Ignus Hiring", "Ignus Logo", "Image 1", "Image 2", "Image 3")
         val adapter = ArrayAdapter(this, android.R.layout
                 .simple_spinner_dropdown_item, items)
         spinner.adapter = adapter
@@ -79,6 +84,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         detector.detectInImage(image)
                 .addOnSuccessListener { texts ->
                     processTextRecognitionResult(texts)
+                    toast(completeText)
                 }
                 .addOnFailureListener { e ->
                     e.printStackTrace()
@@ -98,6 +104,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val elements = lines[j].elements
                 for (k in elements.indices) {
                     val textGraphic = TextGraphic(graphicOverlay, elements[k])
+                    completeText = completeText.plus(elements[k].text + " ")
                     graphicOverlay.add(textGraphic)
                     Log.d(TAG, k.toString())
                 }
@@ -153,9 +160,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         graphicOverlay.clear()
 
         selectedImage = when(position) {
-            0 -> getBitmapFromAsset(this, "Please_walk_on_the_grass.jpg")
-            1 -> getBitmapFromAsset(this, "non-latin.jpg")
-            2 -> getBitmapFromAsset(this, "nl2.jpg")
+            0 -> getBitmapFromAsset(this, "ignus_hiring.jpg")
+            1 -> getBitmapFromAsset(this, "ignus.jpg")
+            2 -> getBitmapFromAsset(this, "non-latin.jpg")
+            3 -> getBitmapFromAsset(this, "nl2.jpg")
+            4 -> getBitmapFromAsset(this, "Please_walk_on_the_grass.jpg")
             else -> null
         }
 
