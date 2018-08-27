@@ -42,8 +42,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var completeText = ""
 
-    private lateinit var imageFilePath: String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -94,7 +92,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun processTextRecognitionResult(texts: FirebaseVisionText) {
         val blocks = texts.blocks
         if (blocks.size == 0) {
-            Toast.makeText(this, "No Text Found.", Toast.LENGTH_LONG).show()
+            toast("No Text Found.")
             return
         }
         graphicOverlay.clear()
