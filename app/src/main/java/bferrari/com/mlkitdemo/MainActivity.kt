@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         detector.detectInImage(image)
                 .addOnSuccessListener { texts ->
                     processTextRecognitionResult(texts)
-                    toast(completeText)
+                    reconText.text = completeText
                 }
                 .addOnFailureListener { e ->
                     e.printStackTrace()
@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     (it.height / scaleFactor).toInt(),
                     true)
 
-            imageRecon.setImageBitmap(resizedBitmap)
+            Glide.with(this).load(resizedBitmap).into(imageRecon)
             selectedImage = resizedBitmap
         }
     }
